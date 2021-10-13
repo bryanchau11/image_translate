@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<link rel="stylesheet" href={{ url_for('static', filename='style.css') }}/>
+	</head>
+	<body>
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul class=flashes>
+					{% for message in messages %}
+						<li>{{ message }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
+		<h1>{{current_user.username}}'s Song Explorer</h1>
+		{% if has_artists_saved %}
+			<h2>{{song_name}}</h2>
+			<h3>{{song_artist}}</h3>
+			<div>
+				<img src="{{song_image_url}}" width=300 height=300/>
+			</div>
+			<div>
+				<audio controls>
+					<source src={{preview_url}}/>
+				</audio>
+			</div>
+			<a href="{{genius_url}}"> Click here to see lyrics! </a>
+		{% else %}
+			<h2>Looks like you don't have anything saved! Use the form below!</h2>
+		{% endif %}
+		<h1>Save a favorite artist ID for later:</h1>
+		<form method="POST" action="/save">
+            <input type="text" name="artist_id">
+            <input type="submit" value="Submit">
+        </form>
+	</body>
+</html>
