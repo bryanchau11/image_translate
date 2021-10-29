@@ -8,7 +8,34 @@ function App() {
   // in public/index.html in the script with id "data"
   const args = JSON.parse(document.getElementById("data").text);
 
-  // TODO: Implement your main page as a React component.
+  
+  const textInput = useRef(null);
+  const [textOutPut, setText] = useState("");
+  function onButtonClick() {
+    let newItem = textInput.current.value;
+    
+    fetch('/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 'image': newItem }),
+
+    }).then((response) => response.json()).then((data) => {
+      setText(data.image_text);
+    });
+    textInput.current.value = "";
+  }
+
+  return (
+    <div>
+      <input ref={textInput} type="text"/>
+      <button onClick={onButtonClick}>Translate the image</button>
+      <ul>
+        {textOutPut}
+      </ul>
+    </div>
+  );
 }
 
 export default App;
