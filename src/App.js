@@ -28,6 +28,7 @@ function App() {
 
   return (
     <div>
+      <h1>Hello</h1>
       <input ref={textInput} type="text"/>
       <button onClick={onButtonClick}>Translate the image</button>
       <ul>
